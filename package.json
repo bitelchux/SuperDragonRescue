@@ -1,11 +1,11 @@
 {
   "private": true,
-  "name": "js13k-boilerplate",
-  "version": "1.1.0",
-  "description": "JS13KGames boilerplate",
-  "author": "Florent Cailhol <florent.cailhol@gmail.com>",
+  "name": "js13k-boilerplate-platformer",
+  "version": "1.0.0",
+  "description": "JS13KGames boilerplate - simple platformer",
+  "author": "madmarcel <madmarcel@gmail.com>",
   "license": "MIT",
-  "repository": "ooflorent/js13k-boilerplate",
+  "repository": "madmarcel/js13k-boilerplate-platformer",
   "devDependencies": {
     "browserify": "^5.10.0",
     "bundle-collapser": "^1.1.0",
@@ -25,7 +25,8 @@
     "gulp-util": "^3.0.0",
     "gulp-zip": "^2.0.1",
     "rimraf": "^2.2.8",
-    "vinyl-source-stream": "^0.1.1"
+    "vinyl-source-stream": "^0.1.1",
+    "gulp-notify": "^2.2.0"
   },
   "scripts": {
     "build": "gulp build",

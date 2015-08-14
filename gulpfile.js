@@ -18,6 +18,7 @@ var size = require('gulp-size');
 var uglify = require('gulp-uglify');
 var zip = require('gulp-zip');
 var source = require('vinyl-source-stream');
+var notify = require('gulp-notify');
 
 program.on('--help', function(){
   console.log('  Tasks:');
@@ -38,7 +39,7 @@ program
 var prod = !!program.prod;
 
 gulp.task('default', ['build']);
-gulp.task('build', ['build_source', 'build_index', 'build_styles']);
+gulp.task('build', ['build_source', 'build_index', 'build_styles', 'copy_files']);
 
 gulp.task('build_source', function() {
   var bundler = browserify('./src/main', {debug: !prod});
@@ -73,6 +74,17 @@ gulp.task('build_styles', function() {
     .pipe(gulp.dest('build'));
 });
 
+gulp.task('copy_files', function() {
+    /* copy all the images to the build folder */
+    gulp.src('src/*.png')
+      .pipe(gulp.dest('build'));
+    /* this concatenates all the assumed to be minified 3rd party libs into one file */
+    gulp.src('thirdparty/*.js')
+      .pipe(concat('3rd.js'))
+      .pipe(gulpif(prod, uglify()))
+      .pipe(gulp.dest('build'));
+});
+
 gulp.task('clean', function() {
   rimraf.sync('build');
   rimraf.sync('dist');
@@ -90,14 +102,25 @@ gulp.task('dist', ['build'], function() {
     gutil.log(gutil.colors.yellow('WARNING'), gutil.colors.gray('You should generate production assets to lower the archive size'));
   }
 
+  var s = size();
+
   return gulp.src('build/*')
-    .pipe(zip('archive.zip'))
-    .pipe(size())
+    .pipe(zip('js13k-dist.zip'))
+    .pipe(s)
     .pipe(micro({limit: 13 * 1024}))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('dist'))
+    .pipe(notify({
+            title: 'Build result',
+            onLast: true,
+            message: function () {
+                return '\nTotal size\t\t' + s.prettySize + '\n' + 'Bytes used\t\t' + s.size + '\n' + 'Bytes left\t\t' + ((13 * 1024) - s.size);
+            }
+    }));
 });
 
 gulp.task('watch', function() {
+  gulp.watch('thirdparty/*.js', ['copy_files', 'build_index']);
+  gulp.watch('src/*.png', ['copy_files', 'build_index']);
   gulp.watch('src/**/*.js', ['lint', 'build_source']);
   gulp.watch('src/styles.less', ['build_styles']);
   gulp.watch('src/index.html', ['build_index']);
