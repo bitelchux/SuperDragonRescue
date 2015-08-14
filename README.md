@@ -14,6 +14,14 @@ Live demo here:
 * Delete `.git` directory
 * Delete unneeded files and blocks
 
+## Installation
+
+Run this command to install the necessary npm modules
+
+```
+npm install
+```
+
 ## Features
 
 * Advanced build system using [gulp.js](http://gulpjs.com/)
@@ -31,7 +39,8 @@ Included sound lib:
 
 Make your sound effects here:
 [as3sfxr](http://www.superflashbros.net/as3sfxr/)
-(Right click on slider and use copy and paste to copy sfx data into your code)
+
+(Right click on the center sliders and use copy and paste to copy sfx data into your code)
 
 ## Gulp Instructions
 ```
@@ -42,7 +51,7 @@ gulp serve		launch development server
 gulp watch		watch for file changes and rebuild automatically
 ```
 
-In other words, run:
+In other words, run this in a terminal:
 ```
 gulp build; gulp serve
 ```
@@ -51,6 +60,4 @@ and then in a second terminal, run:
 ```
 gulp watch
 ```
-Open up [localhost:3000](localhost:3000) in your favourite browser and you're all set!
-
-
+Then open up [localhost:3000](http://localhost:3000) in your favourite browser and you're all set!
