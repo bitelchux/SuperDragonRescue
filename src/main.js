@@ -15,6 +15,11 @@
       var canvas = document.querySelector('#game');
       var ctx = canvas.getContext('2d');
 
+      // Don't you dare AA my pixelart!
+      // Note that the Google Clojure compiler may strip this out :(
+      ctx.mozImageSmoothingEnabled = false;
+      ctx.imageSmoothingEnabled = false;
+
       var gameSize = { 'width': canvas.width, 'height': canvas.height };
 
       this.state = 'LOADING';
@@ -58,7 +63,7 @@
     };
 
     Game.prototype = {
-      'render': function() { 
+      'render': function() {
 
       },
       'update': function() {

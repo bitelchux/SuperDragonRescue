@@ -5,18 +5,12 @@ A simple platformer with title screen, sound effects, images and keyboard contro
 Use the arrow keys to make the little dude jump around.
 
 Live demo here:
-[demo](https://madmarcel.github.io/js13k-platformer/index.html)
 
-## Quick start
-
-* Clone the repository
-* Update `package.json` with your informations
-* Delete `.git` directory
-* Delete unneeded files and blocks
+[platformer demo](https://madmarcel.github.io/js13k-platformer/index.html)
 
 ## Installation
 
-Run this command to install the necessary npm modules
+Clone the repository, and run this command to install the necessary npm modules
 
 ```
 npm install
@@ -35,9 +29,11 @@ npm install
 ## Sound Effects
 
 Included sound lib:
+
 [jsfxr](https://github.com/mneubrand/jsfxr)
 
 Make your sound effects here:
+
 [as3sfxr](http://www.superflashbros.net/as3sfxr/)
 
 (Right click on the center sliders and use copy and paste to copy sfx data into your code)
@@ -60,4 +56,16 @@ and then in a second terminal, run:
 ```
 gulp watch
 ```
+
 Then open up [localhost:3000](http://localhost:3000) in your favourite browser and you're all set!
+
+Any changes to code, css, images, etc will trigger an auto reload of your project in the browser.
+
+When you are ready to submit your project, run
+
+```
+gulp dist --prod
+```
+
+and your final compressed minified project will be created in dist/js13k-dist.zip
+
