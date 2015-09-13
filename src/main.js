@@ -1,85 +1,120 @@
 (function() {
     'use strict';
-    var game = null;
-    // audio
-    var audio = null;
-    // images
-    var images = [];
 
-    var getTimeStamp = function() {
-        return Date.now();
-    };
+    var kb = require('./keyboard');
+    var ts = require('./textscreen');
+    var lev = require('./level');
+
+    var game = null;
+
+    // the game states
+    var LOADING = 0;
+    var TITLE = 1;
+    var INIT = 2;
+    var GAME = 3;
 
     var Game = function() {
 
-      var canvas = document.querySelector('#game');
-      var ctx = canvas.getContext('2d');
+      var self = this;
 
-      // Don't you dare AA my pixelart!
-      // Note that the Google Clojure compiler may strip this out :(
-      ctx.mozImageSmoothingEnabled = false;
-      ctx.imageSmoothingEnabled = false;
+      this.images = [];
 
-      var gameSize = { 'width': canvas.width, 'height': canvas.height };
+      var canvas = document.querySelector('#g');
+      this.ctx = canvas.getContext('2d');
 
-      this.state = 'LOADING';
-      this.keyboarder = new Keyboarder();
-      this.player = new Player(this, gameSize);
+      // Don't you dare AntiAlias the pixelart!
+      this.ctx.imageSmoothingEnabled = this.ctx.mozImageSmoothingEnabled = this.ctx.oImageSmoothingEnabled = false;
 
-      audio = new ArcadeAudio();
+      this.gameSize = { 'width': canvas.width, 'height': canvas.height };
 
-      // pickup item sound
-      audio.add( 'pickup', 2,
-          [
-              [0,,0.01,0.4394,0.3103,0.8765,,,,,,0.3614,0.5278,,,,,,1,,,,,0.5]
-          ]
-      );
+      this.state = LOADING;
+      this.keyboarder = new kb();
 
-      // start image loader, once it's done loading, gamestate will progress to title screen
-      this.loadImages();
+      // set up 3 text screens: loading, title and game over
+      this.loadingScreen = new ts( this, '#000', ['Loading...']);
+      this.titleScreen = new ts( this, '#6b036e', ['Super Dragon Rescue', 'made for #js13k', 'Code by', 'madmarcel', 'Art by', 'surt & madmarcel'], 'S', 'start', INIT );
 
-      var SKIPTICKS = 1000 / 60; // frame rate
+	  // start image loader, once it's done loading, gamestate will progress to title screen
+      this.loadImgs();
 
-      var nextFrame = getTimeStamp();
-      var loops = 0;
+      var SKIPTICKS = 1000 / 60; // frame rate, 60FPS
 
       var tick = function() {
-          loops = 0;
-          // frame rate independent game speed
-          while ( getTimeStamp() > nextFrame && loops < 10 ) {
-              // update the game state
-              self.update();
-              nextFrame += SKIPTICKS;
-              loops++;
-          }
           // draw the next frame
           self.render();
-
           requestAnimationFrame(tick);
         };
 
         // start the animation loop
         tick();
+
+		var gameStep = function() {
+			self.update();
+			setTimeout( gameStep, SKIPTICKS ); // process the game logic at a target 60 FPS.
+		}
+		// start the game loop
+		gameStep();
     };
 
     Game.prototype = {
       'render': function() {
-
+        this.ctx.clearRect(0, 0, this.gameSize.width, this.gameSize.height);
+        switch ( this.state ) {
+          case LOADING:
+              this.loadingScreen.render(this.ctx);
+            break;
+          case TITLE:
+              this.titleScreen.render(this.ctx);
+            break;
+          case GAME:
+            this.level.render(this.ctx);
+            break;
+        }
       },
       'update': function() {
-
-      },
-      // load our spritesheet
-      'loadImages': function(){
-            var self = this;
-            var imageObj = new Image();
-
-            imageObj.onload = function() {
-                self.state = 'TITLE';
-            };
-            imageObj.src = 'spritesheet.png';
-            images[0] = imageObj;
+        switch ( this.state ) {
+          case LOADING:
+            this.loadingScreen.update();
+            break;
+          case TITLE:
+            this.titleScreen.update();
+            break;
+          case INIT:
+            // setup the game
+            this.level = new lev(0, this, false); // real level
+            this.state = GAME;
+            break;
+          case GAME:
+            this.level.update();
+            break;
         }
+      },
+      // load our images
+      'loadImgs': function(){
+            var self = this;
+			// all the images we want to load...
+            var imageNames = [
+                                's'
+                              ];
+
+            var check_done = function(count) {
+              if ( count >= imageNames.length ) {
+				self.titleScreen.lvl = new lev(0, self, true); // dud level - scrolls in background of title screen with no player or monsters
+				self.state = TITLE;
+              }
+            };
+
+        var i_count = 0;
+		for ( var i = 0; i < imageNames.length; i++ ) {
+            var imageObj = new Image();
+            imageObj.onload = function() {
+                i_count++;
+				check_done(i_count);
+            };
+            imageObj.src = imageNames[i] + '.png';
+            self.images[i] = imageObj;
+        }
+      }
     };
 
     // start game when page has finished loading
@@ -87,7 +122,3 @@
       game = new Game();
     });
 })();
-
-/*
-
-*/

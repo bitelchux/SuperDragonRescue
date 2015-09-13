@@ -1,0 +1,16 @@
+TODO:
+-----
+
+Optional
+--------
+- player carry anim
+- Variable jump
+- Sound
+- Music
+- Something to indicate collision - pop/circle
+- Can't jump on slopes
+- Player has multiple hitpoints
+- Player is rewarded when killing monsters
+- Next level transition
+- 1up indicator
+

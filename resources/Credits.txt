@@ -1,25 +1,14 @@
-The spritesheets are sourced from
-
-http://opengameart.org/content/tux-bros
-
-and
+The spritesheet is sourced from
 
 http://opengameart.org/content/twin-dragons
 
-Both images are licensed GPL 2.0, check urls for details
+This image is licensed GPL 2.0, check urls for details
 --------------------------------------------------------
 
 Author: Surt
 
 Description:
 ------------
-
-Tux Bros:
-
-Abandoned, unfinished NESish platformer tiles.
-
-Started life as a SuperTux demake.
-
 
 Twin Dragons:
 

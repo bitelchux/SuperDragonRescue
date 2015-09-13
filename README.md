@@ -1,12 +1,30 @@
 # JS13KGames Boilerplate - simple platformer
 
-A simple platformer with title screen, sound effects, images and keyboard controls.
+# Super Dragon Rescue
 
-Use the arrow keys to make the little dude jump around.
+Help Dinky the Dragon rescue his friend Sir Knight from the Fire-breathing Princess!
+
+A simple platformer with sloping floors, generously inspired by Super Mario Bros 2.
+
+Five Levels + an endboss.
+
+Use the arrow keys to move and jump.
+Z to pickup and throw crates and monsters.
+
+Collect chillies for extra lives.
 
 Live demo here:
 
-[platformer demo](https://madmarcel.github.io/js13k-platformer/index.html)
+[platformer demo](https://madmarcel.github.io/js13k2015/)
+[Level editor](https://madmarcel.github.io/js13k2015/leveleditor/)
+
+## Credits:
+
+Platformer code based on these articles by Loktar:
+[Creating a canvas platformer tutorial part one](http://www.somethinghitme.com/2013/01/09/creating-a-canvas-platformer-tutorial-part-one/)
+
+Pixelart by Surt, find the original spritesheet + license details here:
+[Twin Dragons spritesheet](http://opengameart.org/content/twin-dragons)
 
 ## Installation
 
@@ -68,4 +86,3 @@ gulp dist --prod
 ```
 
 and your final compressed minified project will be created in dist/js13k-dist.zip
-

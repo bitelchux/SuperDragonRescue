@@ -39,18 +39,24 @@ program
 var prod = !!program.prod;
 
 gulp.task('default', ['build']);
-gulp.task('build', ['build_source', 'build_index', 'build_styles', 'copy_files']);
+gulp.task('build', ['build_source', 'build_index', /* 'build_styles',*/ 'copy_files']);
 
 gulp.task('build_source', function() {
+
   var bundler = browserify('./src/main', {debug: !prod});
   if (prod) {
     bundler.plugin(require('bundle-collapser/plugin'));
   }
-
+  
+  // this bundler is great, but it adds 500 bytes to final source!
+  // To produce final js build file, I copied all files into one,
+  // removed all the requires 
+  // and then used Google Closure to minify the file.
+  // Didn't even need to use 'advanced' mode.
   return bundler
     .bundle()
     .on('error', browserifyError)
-    .pipe(source('build.js'))
+    .pipe(source('b.js'))
     .pipe(buffer())
     .pipe(gulpif(prod, uglify()))
     .pipe(gulp.dest('build'));
@@ -69,7 +75,7 @@ gulp.task('build_index', function() {
 gulp.task('build_styles', function() {
   return gulp.src('src/styles.less')
     .pipe(less())
-    .pipe(concat('build.css'))
+    .pipe(concat('b.css'))
     .pipe(gulpif(prod, cssmin()))
     .pipe(gulp.dest('build'));
 });
@@ -79,10 +85,10 @@ gulp.task('copy_files', function() {
     gulp.src('src/*.png')
       .pipe(gulp.dest('build'));
     /* this concatenates all the assumed to be minified 3rd party libs into one file */
-    gulp.src('thirdparty/*.js')
+    /* gulp.src('thirdparty/*.js')
       .pipe(concat('3rd.js'))
       .pipe(gulpif(prod, uglify()))
-      .pipe(gulp.dest('build'));
+      .pipe(gulp.dest('build')); */
 });
 
 gulp.task('clean', function() {
@@ -107,7 +113,7 @@ gulp.task('dist', ['build'], function() {
   return gulp.src('build/*')
     .pipe(zip('js13k-dist.zip'))
     .pipe(s)
-    .pipe(micro({limit: 13 * 1024}))
+    //.pipe(micro({limit: 13 * 1024}))
     .pipe(gulp.dest('dist'))
     .pipe(notify({
             title: 'Build result',
@@ -122,7 +128,7 @@ gulp.task('watch', function() {
   gulp.watch('thirdparty/*.js', ['copy_files', 'build_index']);
   gulp.watch('src/*.png', ['copy_files', 'build_index']);
   gulp.watch('src/**/*.js', ['lint', 'build_source']);
-  gulp.watch('src/styles.less', ['build_styles']);
+  /* gulp.watch('src/styles.less', ['build_styles']); */
   gulp.watch('src/index.html', ['build_index']);
 });
 
