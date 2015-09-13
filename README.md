@@ -16,14 +16,17 @@ Collect chillies for extra lives.
 Live demo here:
 
 [platformer demo](https://madmarcel.github.io/js13k2015/)
+
 [Level editor](https://madmarcel.github.io/js13k2015/leveleditor/)
 
 ## Credits:
 
 Platformer code based on these articles by Loktar:
+
 [Creating a canvas platformer tutorial part one](http://www.somethinghitme.com/2013/01/09/creating-a-canvas-platformer-tutorial-part-one/)
 
 Pixelart by Surt, find the original spritesheet + license details here:
+
 [Twin Dragons spritesheet](http://opengameart.org/content/twin-dragons)
 
 ## Installation

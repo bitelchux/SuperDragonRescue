@@ -2,8 +2,8 @@ The spritesheet is sourced from
 
 http://opengameart.org/content/twin-dragons
 
-This image is licensed GPL 2.0, check urls for details
---------------------------------------------------------
+This image is licensed both CC-SA & GPL 2.0, check url for details
+------------------------------------------------------------------
 
 Author: Surt
 
@@ -13,6 +13,4 @@ Description:
 Twin Dragons:
 
 More abandoned NES-like tiles.
-
-
 
