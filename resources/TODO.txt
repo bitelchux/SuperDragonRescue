@@ -1,8 +1,5 @@
 TODO:
 -----
-
-Optional
---------
 - player carry anim
 - Variable jump
 - Sound
@@ -13,4 +10,16 @@ Optional
 - Player is rewarded when killing monsters
 - Next level transition
 - 1up indicator
+- Gamepad support
+- Thrown items bounce
+- In-game instructions
+- Clean up and de-obfuscate code, separate out 'merged' classes, use class inheritance for monsters.
+
+- Water level? Try level with rising water level?
+
+Level editor:
+-------------
+- Clean up level editor code
+- Redo map storage
+- Scale level editor down to fit smaller screens
 
